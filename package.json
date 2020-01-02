@@ -2,9 +2,9 @@
   "name": "svelte-validator",
   "version": "0.0.1",
   "description": "Form validation library for Svelte v3 application.",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "a": "node src/index.js",
+    "build": "rollup -c rollup.config.js",
     "test": "npm test"
   },
   "repository": {
@@ -25,6 +25,8 @@
     "svelte": ">= 3.0.0"
   },
   "devDependencies": {
+    "rollup": "^1.27.14",
+    "rollup-plugin-node-resolve": "^5.2.0",
     "svelte": ">= 3.0.0"
   }
 }
