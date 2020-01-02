@@ -19,6 +19,9 @@
     "svelte",
     "validation"
   ],
+  "files": [
+    "dist"
+  ],
   "author": "Joe-noh",
   "license": "MIT",
   "bugs": {
