@@ -2,10 +2,12 @@
   "name": "svelte-validator",
   "version": "0.0.1",
   "description": "Form validation library for Svelte v3 application.",
-  "main": "src/index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
   "scripts": {
-    "a": "node src/index.js",
-    "test": "npm test"
+    "build": "rollup -c rollup.config.js",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,12 @@
     "svelte": ">= 3.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "rollup": "^1.27.14",
+    "rollup-plugin-node-resolve": "^5.2.0",
     "svelte": ">= 3.0.0"
   }
 }
