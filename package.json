@@ -2,7 +2,8 @@
   "name": "svelte-validator",
   "version": "0.0.1",
   "description": "Form validation library for Svelte v3 application.",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
   "scripts": {
     "build": "rollup -c rollup.config.js",
     "test": "npm test"

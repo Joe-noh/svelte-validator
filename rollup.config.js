@@ -1,13 +1,13 @@
 import resolve from 'rollup-plugin-node-resolve'
+import pkg from './package.json'
 
 export default {
   input: 'src/index.js',
-  output: {
-    name: 'svelte-validator',
-    file: 'dist/index.js',
-    format: 'umd'
-  },
-  plugins: [
-    resolve()
+  output: [
+    { file: pkg.main, format: 'cjs' },
+    { file: pkg.module, format: 'es' }
+  ],
+  external: [
+    'svelte/store'
   ]
 }
