@@ -21,9 +21,9 @@ function createValidator({ rules }) {
 function createValidatorFun(rules) {
   return (value) => {
     return Object.keys(rules).reduce((violated, ruleName) => {
-      const validator = validators[ruleName];
+      const isViolated = validators[ruleName];
 
-      validator(value, rules[ruleName]) ? [...violated, ruleName] : violated;
+      return isViolated(value, rules[ruleName]) ? [...violated, ruleName] : violated
     }, [])
   }
 }
