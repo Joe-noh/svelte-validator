@@ -24,7 +24,7 @@ npm i -S Joe-noh/svelte-validator#master
 </script>
 
 <form>
-  <input bind:value="{valueStore}">
+  <input bind:value="{$valueStore}">
   {#if 'required' in $errorStore}
     <span>Can't be blank!</span>
   {/if}

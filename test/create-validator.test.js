@@ -1,3 +1,4 @@
+import { get } from 'svelte/store'
 import { createValidator } from '../src/create-validator'
 
 describe('createValidator', () => {
@@ -13,5 +14,11 @@ describe('createValidator', () => {
     expect(errorStore).toMatchObject({
       subscribe: expect.any(Function),
     })
+  })
+
+  test('use given initial value', () => {
+    const [valueStore] = createValidator({ initial: 'initial value', rules: [] })
+
+    expect(get(valueStore)).toEqual('initial value')
   })
 })
