@@ -1,0 +1,30 @@
+{
+  "name": "svelte-validator",
+  "version": "0.0.1",
+  "description": "Form validation library for Svelte v3 application.",
+  "main": "src/index.js",
+  "scripts": {
+    "a": "node src/index.js",
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joe-noh/svelte-validator.git"
+  },
+  "keywords": [
+    "svelte",
+    "validation"
+  ],
+  "author": "Joe-noh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Joe-noh/svelte-validator/issues"
+  },
+  "homepage": "https://github.com/Joe-noh/svelte-validator#readme",
+  "peerDependencies": {
+    "svelte": ">= 3.0.0"
+  },
+  "devDependencies": {
+    "svelte": ">= 3.0.0"
+  }
+}
