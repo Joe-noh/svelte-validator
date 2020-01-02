@@ -4,19 +4,10 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var store = require('svelte/store');
 
-function required(value, opts) {
-  return value !== null && value !== undefined
-}
-
-var validators = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  required: required
-});
-
-function createValidator({ rules }) {
+function createValidator({ initial, rules }) {
   const validator = createValidatorFun(rules);
 
-  const valueStore = store.writable('');
+  const valueStore = store.writable(initial);
   const errorStore = store.derived(valueStore, (value) => validator(value));
 
   return [valueStore, errorStore]
@@ -24,12 +15,42 @@ function createValidator({ rules }) {
 
 function createValidatorFun(rules) {
   return (value) => {
-    return Object.keys(rules).reduce((violated, ruleName) => {
-      const isViolated = validators[ruleName];
+    return rules.reduce((violated, rule) => {
+      const { name, isValid, argument } = rule;
 
-      return isViolated(value, rules[ruleName]) ? [...violated, ruleName] : violated
-    }, [])
+      if (isValid(value)) {
+        return violated
+      } else {
+        return {...violated, [name]: argument}
+      }
+    }, {})
   }
 }
 
-exports.createValidator = createValidator;
+function required() {
+  return {
+    name: 'required',
+    argument: undefined,
+    isValid: (value) => {
+      if (typeof value === 'string') {
+        return value.trim() !== ''
+      }
+
+      return value !== null && value !== undefined
+    }
+  }
+}
+
+function minLength(length) {
+  return {
+    name: 'minLength',
+    argument: length,
+    isValid: (value) => {
+      return value.length >= length
+    }
+  }
+}
+
+exports.default = createValidator;
+exports.minLength = minLength;
+exports.required = required;
