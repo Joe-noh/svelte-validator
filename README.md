@@ -35,3 +35,18 @@ npm i -S Joe-noh/svelte-validator#master
   <button type="submit" disabled="{hasError($errorStore)}">Submit</button>
 </form>
 ```
+
+#### Custom Validator
+
+You can implement your own validator. It should be an object which has `name` and `isValid` properties.
+
+```javascript
+const myRule = {
+  name: 'myRule',
+  isValid: () => {
+    // true or false
+  },
+}
+
+createValidator({ rules: [myRule] })
+```
