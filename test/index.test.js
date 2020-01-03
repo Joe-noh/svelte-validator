@@ -8,6 +8,7 @@ import createValidator, {
   maxValue,
   betweenValue,
   format,
+  hasError,
 } from '../src/index'
 
 describe('integration', () => {
@@ -21,6 +22,7 @@ describe('integration', () => {
     expect(maxValue).toEqual(expect.any(Function))
     expect(betweenValue).toEqual(expect.any(Function))
     expect(format).toEqual(expect.any(Function))
+    expect(hasError).toEqual(expect.any(Function))
   })
 
   test('validates reactively', () => {
