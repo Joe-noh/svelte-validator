@@ -1,4 +1,4 @@
-import { maxValue } from '../../src/validators/max-value'
+import { maxValue } from '../../src/index'
 
 describe('maxValue', () => {
   describe('return value', () => {

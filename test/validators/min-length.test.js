@@ -1,4 +1,4 @@
-import { minLength } from '../../src/validators/min-length'
+import { minLength } from '../../src/index'
 
 describe('minLength', () => {
   describe('return value', () => {

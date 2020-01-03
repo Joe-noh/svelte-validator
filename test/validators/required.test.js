@@ -1,4 +1,4 @@
-import { required } from '../../src/validators/required'
+import { required } from '../../src/index'
 
 describe('required', () => {
   describe('return value', () => {

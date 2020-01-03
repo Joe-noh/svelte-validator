@@ -1,4 +1,4 @@
-import { minValue } from '../../src/validators/min-value'
+import { minValue } from '../../src/index'
 
 describe('minValue', () => {
   describe('return value', () => {
