@@ -1,14 +1,14 @@
-## svelte-validator
+# svelte-validator
 
-### Usage
+## Install
 
 This is WIP project. Use at your own responsibility!
 
 ```
-npm i -S Joe-noh/svelte-validator#master
+npm i -S svelte-validator
 ```
 
-### Usage
+## Usage
 
 ```html
 <script>
@@ -36,17 +36,17 @@ npm i -S Joe-noh/svelte-validator#master
 </form>
 ```
 
-#### `createValidator` Options
+### `createValidator` Options
 
-##### `rules`
+#### `rules`
 
 An array of validators.
 
-##### `initial`
+#### `initial`
 
 Initial value of `valueStore`.
 
-##### `immediate`
+#### `immediate`
 
 If `false`, validation does not run until calling `command.activate()`. Default `true`.
 For example this can be used to prevent display errors until first blur event occurs.
@@ -55,7 +55,7 @@ For example this can be used to prevent display errors until first blur event oc
 <input type="text" on:blur="{command.activate}">
 ```
 
-#### Builtin Validators
+### Builtin Validators
 
 - `minValue(min)`
 - `maxValue(max)`
@@ -67,7 +67,7 @@ For example this can be used to prevent display errors until first blur event oc
 
 See implementation for details.
 
-#### Custom Validator
+### Custom Validator
 
 You can implement your own validator. It should be an object which has `name` and `isValid` properties.
 
