@@ -4,17 +4,25 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var store = require('svelte/store');
 
-function createValidator({ initial, rules }) {
+function createValidator(opts) {
+  const { initial, rules } = opts;
   const validator = createValidatorFun(rules);
 
+  const configStore = store.writable(config(opts));
   const valueStore = store.writable(initial);
-  const errorStore = store.derived(valueStore, (value) => validator(value));
+  const errorStore = store.derived([valueStore, configStore], ([value, config]) => validator(value, config));
 
-  return [valueStore, errorStore]
+  const activate = () => {
+    configStore.update(config => ({ ...config, active: true }));
+  };
+
+  return [valueStore, errorStore, { activate }]
 }
 
 function createValidatorFun(rules) {
-  return (value) => {
+  return (value, config) => {
+    if (!config.active) { return {} }
+
     return rules.reduce((violated, rule) => {
       const { name, isValid, argument } = rule;
 
@@ -25,6 +33,16 @@ function createValidatorFun(rules) {
       }
     }, {})
   }
+}
+
+function config(opts) {
+  return {
+    active: fetch(opts, 'immediate', true)
+  }
+}
+
+function fetch(opts, key, fallback) {
+  return key in opts ? opts[key] : fallback
 }
 
 function required() {
