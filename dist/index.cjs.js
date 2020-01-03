@@ -142,10 +142,22 @@ function hasError(errorObject) {
   return Object.keys(errorObject).length > 0
 }
 
+function getErrorOptions(errorObject, errorNames, key = null) {
+  return errorNames.reduce((acc, name) => {
+    if (name in errorObject) {
+      const value = key ? errorObject[name][key] : errorObject[name];
+      return [...acc, value]
+    } else {
+      return acc
+    }
+  }, [])
+}
+
 exports.betweenLength = betweenLength;
 exports.betweenValue = betweenValue;
 exports.default = createValidator;
 exports.format = format;
+exports.getErrorOptions = getErrorOptions;
 exports.hasError = hasError;
 exports.maxLength = maxLength;
 exports.maxValue = maxValue;

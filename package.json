@@ -35,10 +35,16 @@
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "babel-jest": "^24.9.0",
+    "husky": "^3.1.0",
     "jest": "^24.9.0",
     "np": "^5.2.1",
     "rollup": "^1.27.14",
     "rollup-plugin-node-resolve": "^5.2.0",
     "svelte": ">= 3.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build"
+    }
   }
 }
