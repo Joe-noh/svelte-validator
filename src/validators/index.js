@@ -1,5 +1,7 @@
 export * from './required'
 export * from './min-length'
 export * from './max-length'
+export * from './between-length'
 export * from './min-value'
 export * from './max-value'
+export * from './between-value'
