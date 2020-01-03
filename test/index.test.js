@@ -19,6 +19,24 @@ describe('integration', () => {
     errors = get(errorStore)
     expect(Object.keys(errors)).toEqual([])
   })
+
+  test('immediate: false delays validation until calling activate', () => {
+    const rules = [minLength(3)]
+    const [valueStore, errorStore, command] = createValidator({ rules, immediate: false })
+
+    let errors = get(errorStore)
+    expect(Object.keys(errors)).toEqual([])
+
+    valueStore.set('he')
+
+    errors = get(errorStore)
+    expect(Object.keys(errors)).toEqual([])
+
+    command.activate()
+
+    errors = get(errorStore)
+    expect(Object.keys(errors)).toEqual(expect.arrayContaining(['minLength']))
+  })
 })
 
 describe('custom validator', () => {

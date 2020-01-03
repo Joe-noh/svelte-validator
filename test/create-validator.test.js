@@ -3,7 +3,7 @@ import createValidator from '../src/index'
 
 describe('createValidator', () => {
   test('returns svelte stores', () => {
-    const [valueStore, errorStore] = createValidator({ rules: [] })
+    const [valueStore, errorStore, command] = createValidator({ rules: [] })
 
     expect(valueStore).toMatchObject({
       set: expect.any(Function),
@@ -14,6 +14,8 @@ describe('createValidator', () => {
     expect(errorStore).toMatchObject({
       subscribe: expect.any(Function),
     })
+
+    expect(command).toEqual(expect.any(Object))
   })
 
   test('use given initial value', () => {
