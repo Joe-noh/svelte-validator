@@ -24,12 +24,12 @@ function createValidatorFun(rules) {
     if (!config.active) { return {} }
 
     return rules.reduce((violated, rule) => {
-      const { name, isValid, argument } = rule;
+      const { name, isValid, argument, options } = rule;
 
       if (isValid(value)) {
         return violated
       } else {
-        return {...violated, [name]: argument}
+        return {...violated, [name]: { ...options, argument}}
       }
     }, {})
   }
@@ -45,10 +45,11 @@ function fetch(opts, key, fallback) {
   return key in opts ? opts[key] : fallback
 }
 
-function required() {
+function required(options = {}) {
   return {
     name: 'required',
     argument: undefined,
+    options,
     isValid: (value) => {
       if (typeof value === 'string') {
         return value.trim() !== ''
@@ -59,30 +60,33 @@ function required() {
   }
 }
 
-function minLength(length) {
+function minLength(length, options = {}) {
   return {
     name: 'minLength',
     argument: length,
+    options,
     isValid: (value) => {
       return value.length >= length
     }
   }
 }
 
-function maxLength(length) {
+function maxLength(length, options = {}) {
   return {
     name: 'maxLength',
     argument: length,
+    options,
     isValid: (value) => {
       return value.length <= length
     }
   }
 }
 
-function betweenLength([min, max]) {
+function betweenLength([min, max], options = {}) {
   return {
     name: 'betweenLength',
     argument: [min, max],
+    options,
     isValid: (value) => {
       const length = value.length;
       return min <= length && length <= max
@@ -90,40 +94,44 @@ function betweenLength([min, max]) {
   }
 }
 
-function minValue(amount) {
+function minValue(amount, options = {}) {
   return {
     name: 'minValue',
     argument: amount,
+    options,
     isValid: (value) => {
       return value >= amount
     }
   }
 }
 
-function maxValue(amount) {
+function maxValue(amount, options = {}) {
   return {
     name: 'maxValue',
     argument: amount,
+    options,
     isValid: (value) => {
       return value <= amount
     }
   }
 }
 
-function betweenValue([min, max]) {
+function betweenValue([min, max], options = {}) {
   return {
     name: 'betweenValue',
     argument: [min, max],
+    options,
     isValid: (value) => {
       return min <= value && value <= max
     }
   }
 }
 
-function format(regex) {
+function format(regex, options = {}) {
   return {
     name: 'format',
     argument: regex,
+    options,
     isValid: (value) => {
       return regex.test(value)
     }
