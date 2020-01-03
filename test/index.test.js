@@ -1,7 +1,22 @@
 import { get } from 'svelte/store'
-import createValidator, { required, minLength } from '../src/index'
+import createValidator, {
+  required,
+  minLength,
+  maxLength,
+  minValue,
+  maxValue
+} from '../src/index'
 
 describe('integration', () => {
+  test('exported correctly', () => {
+    expect(createValidator).toEqual(expect.any(Function))
+    expect(required).toEqual(expect.any(Function))
+    expect(minLength).toEqual(expect.any(Function))
+    expect(maxLength).toEqual(expect.any(Function))
+    expect(minValue).toEqual(expect.any(Function))
+    expect(maxValue).toEqual(expect.any(Function))
+  })
+
   test('validates reactively', () => {
     const rules = [required(), minLength(3)]
     const [valueStore, errorStore] = createValidator({ initial: '', rules })
