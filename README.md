@@ -17,8 +17,8 @@ npm i -S svelte-validator
   const [valueStore, errorStore, command] = createValidator({
     initial: '',
     rules: [
-      required(),
-      minLength(3),
+      required({ message: 'Cannot be blank!' }), // Can put arbitrary object
+      minLength(3, { message: 'Should be longer than 3.' }),
     ]
   })
 </script>
@@ -26,10 +26,10 @@ npm i -S svelte-validator
 <form>
   <input bind:value="{$valueStore}">
   {#if 'required' in $errorStore}
-    <span>Can't be blank!</span>
+    <span>{$errorStore.required.message}</span>
   {/if}
   {#if 'minLength' in $errorStore}
-    <span>Should be longer than {$errorStore.minLength}</span>
+    <span>{$errorStore.minLength.message}</span>
   {/if}
 
   <button type="submit" disabled="{hasError($errorStore)}">Submit</button>
@@ -57,27 +57,30 @@ For example this can be used to prevent display errors until first blur event oc
 
 ### Builtin Validators
 
-- `minValue(min)`
-- `maxValue(max)`
-- `betweenValue([min, max])`
-- `minLength(length)`
-- `maxLength(length)`
-- `betweenLength([min, max])`
-- `format(regex)`
+- `required(options)`
+- `minValue(min, options)`
+- `maxValue(max, options)`
+- `betweenValue([min, max], options)`
+- `minLength(length, options)`
+- `maxLength(length, options)`
+- `betweenLength([min, max], options)`
+- `format(regex, options)`
 
-See implementation for details.
+You can put any object on `options`. It can be accessed via `errorStore` like `$errorStore.minValue`. See implementation for more details.
 
 ### Custom Validator
 
-You can implement your own validator. It should be an object which has `name` and `isValid` properties.
+You can implement your own validator. It should be an object which has `name` and `isValid` properties, and optionally `options`.
 
 ```javascript
 const myRule = {
   name: 'myRule',
-  isValid: () => {
+  isValid: (value) => {
     // true or false
   },
+  options: {},
 }
 
-createValidator({ rules: [myRule] })
+const [valueStore, errorStore] = createValidator({ rules: [myRule] })
+// $errorStore.myRule appears when value violates the rule.
 ```
