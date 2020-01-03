@@ -1,4 +1,4 @@
-import { maxLength } from '../../src/validators/max-length'
+import { maxLength } from '../../src/index'
 
 describe('maxLength', () => {
   describe('return value', () => {

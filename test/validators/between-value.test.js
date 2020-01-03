@@ -1,4 +1,4 @@
-import { betweenValue } from '../../src/validators/between-value'
+import { betweenValue } from '../../src/index'
 
 describe('betweenValue', () => {
   describe('return value', () => {

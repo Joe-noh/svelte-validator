@@ -1,4 +1,4 @@
-import { format } from '../../src/validators/format'
+import { format } from '../../src/index'
 
 describe('format', () => {
   describe('return value', () => {

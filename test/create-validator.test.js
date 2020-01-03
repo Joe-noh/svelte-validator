@@ -1,5 +1,5 @@
 import { get } from 'svelte/store'
-import { createValidator } from '../src/create-validator'
+import createValidator from '../src/index'
 
 describe('createValidator', () => {
   test('returns svelte stores', () => {
