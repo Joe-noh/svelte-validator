@@ -2,10 +2,11 @@ import { minLength } from '../../src/index'
 
 describe('minLength', () => {
   describe('return value', () => {
-    const { name, argument, isValid } = minLength(10)
+    const { name, argument, options, isValid } = minLength(10)
 
     expect(name).toEqual('minLength')
     expect(argument).toEqual(10)
+    expect(options).toEqual(expect.any(Object))
     expect(isValid).toEqual(expect.any(Function))
   })
 

@@ -2,10 +2,11 @@ import { betweenLength } from '../../src/index'
 
 describe('betweenLength', () => {
   describe('return value', () => {
-    const { name, argument, isValid } = betweenLength([0, 10])
+    const { name, argument, options, isValid } = betweenLength([0, 10])
 
     expect(name).toEqual('betweenLength')
     expect(argument).toEqual([0, 10])
+    expect(options).toEqual(expect.any(Object))
     expect(isValid).toEqual(expect.any(Function))
   })
 

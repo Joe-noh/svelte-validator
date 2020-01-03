@@ -17,8 +17,8 @@ npm i -S svelte-validator
   const [valueStore, errorStore, command] = createValidator({
     initial: '',
     rules: [
-      required(),
-      minLength(3),
+      required({ message: 'Cannot be blank!' }), // Can put arbitrary object
+      minLength(3, { message: 'Should be longer than 3.' }),
     ]
   })
 </script>
@@ -26,10 +26,10 @@ npm i -S svelte-validator
 <form>
   <input bind:value="{$valueStore}">
   {#if 'required' in $errorStore}
-    <span>Can't be blank!</span>
+    <span>{$errorStore.required.message}</span>
   {/if}
   {#if 'minLength' in $errorStore}
-    <span>Should be longer than {$errorStore.minLength}</span>
+    <span>{$errorStore.minLength.message}</span>
   {/if}
 
   <button type="submit" disabled="{hasError($errorStore)}">Submit</button>
