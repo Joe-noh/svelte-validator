@@ -47,5 +47,70 @@ function minLength(length) {
   }
 }
 
+function maxLength(length) {
+  return {
+    name: 'maxLength',
+    argument: length,
+    isValid: (value) => {
+      return value.length <= length
+    }
+  }
+}
+
+function betweenLength([min, max]) {
+  return {
+    name: 'betweenLength',
+    argument: [min, max],
+    isValid: (value) => {
+      const length = value.length;
+      return min <= length && length <= max
+    }
+  }
+}
+
+function minValue(amount) {
+  return {
+    name: 'minValue',
+    argument: amount,
+    isValid: (value) => {
+      return value >= amount
+    }
+  }
+}
+
+function maxValue(amount) {
+  return {
+    name: 'maxValue',
+    argument: amount,
+    isValid: (value) => {
+      return value <= amount
+    }
+  }
+}
+
+function betweenValue([min, max]) {
+  return {
+    name: 'betweenValue',
+    argument: [min, max],
+    isValid: (value) => {
+      return min <= value && value <= max
+    }
+  }
+}
+
+function format(regex) {
+  return {
+    name: 'format',
+    argument: regex,
+    isValid: (value) => {
+      return regex.test(value)
+    }
+  }
+}
+
+function hasError(errorObject) {
+  return Object.keys(errorObject).length > 0
+}
+
 export default createValidator;
-export { minLength, required };
+export { betweenLength, betweenValue, format, hasError, maxLength, maxValue, minLength, minValue, required };
