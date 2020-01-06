@@ -60,6 +60,17 @@ function required(options = {}) {
   }
 }
 
+function equal(val, options = {}) {
+  return {
+    name: 'equal',
+    argument: val,
+    options,
+    isValid: (value) => {
+      return value === val
+    }
+  }
+}
+
 function minLength(length, options = {}) {
   return {
     name: 'minLength',
@@ -170,6 +181,7 @@ function getErrorOptions(errorObject, errorNames, key = null) {
 exports.betweenLength = betweenLength;
 exports.betweenValue = betweenValue;
 exports.default = createValidator;
+exports.equal = equal;
 exports.format = format;
 exports.getErrorOptions = getErrorOptions;
 exports.hasError = hasError;

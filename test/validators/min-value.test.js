@@ -1,7 +1,7 @@
 import { minValue } from '../../src/index'
 
 describe('minValue', () => {
-  describe('return value', () => {
+  test('return value', () => {
     const { name, argument, options, isValid } = minValue(10)
 
     expect(name).toEqual('minValue')

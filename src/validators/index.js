@@ -1,4 +1,5 @@
 export * from './required'
+export * from './equal'
 export * from './min-length'
 export * from './max-length'
 export * from './between-length'

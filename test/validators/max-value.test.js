@@ -1,7 +1,7 @@
 import { maxValue } from '../../src/index'
 
 describe('maxValue', () => {
-  describe('return value', () => {
+  test('return value', () => {
     const { name, argument, options, isValid } = maxValue(10)
 
     expect(name).toEqual('maxValue')

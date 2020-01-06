@@ -19,6 +19,7 @@ npm i -S svelte-validator
     rules: [
       required({ message: 'Cannot be blank!' }), // Can put arbitrary object
       minLength(3, { message: 'Should be longer than 3.' }),
+      not(equal(10, { message: 'Should not equal to 10.' })),
     ]
   })
 </script>
@@ -30,6 +31,9 @@ npm i -S svelte-validator
   {/if}
   {#if 'minLength' in $errorStore}
     <span>{$errorStore.minLength.message}</span>
+  {/if}
+  {#if 'notEqual' in $errorStore}
+    <span>{$errorStore.notEqual.message}</span>
   {/if}
 
   <button type="submit" disabled="{hasError($errorStore)}">Submit</button>
@@ -58,6 +62,7 @@ For example this can be used to prevent display errors until first blur event oc
 ### Builtin Validators
 
 - `required(options)`
+- `equal(options)`
 - `minValue(min, options)`
 - `maxValue(max, options)`
 - `betweenValue([min, max], options)`

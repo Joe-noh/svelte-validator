@@ -1,7 +1,7 @@
 import { format } from '../../src/index'
 
 describe('format', () => {
-  describe('return value', () => {
+  test('return value', () => {
     const { name, argument, options, isValid } = format(/regex/)
 
     expect(name).toEqual('format')

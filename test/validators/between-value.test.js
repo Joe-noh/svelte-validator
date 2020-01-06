@@ -1,7 +1,7 @@
 import { betweenValue } from '../../src/index'
 
 describe('betweenValue', () => {
-  describe('return value', () => {
+  test('return value', () => {
     const { name, argument, options, isValid } = betweenValue([0, 10])
 
     expect(name).toEqual('betweenValue')
