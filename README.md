@@ -12,7 +12,7 @@ npm i -S svelte-validator
 
 ```html
 <script>
-  import createValidator, { required, minLength, hasError } from 'svelte-validator'
+  import createValidator, { required, minLength, equal, not, hasError } from 'svelte-validator'
 
   const [valueStore, errorStore, command] = createValidator({
     initial: '',
