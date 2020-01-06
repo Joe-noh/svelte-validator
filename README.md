@@ -62,7 +62,7 @@ For example this can be used to prevent display errors until first blur event oc
 ### Builtin Validators
 
 - `required(object)`
-- `equal(object)`
+- `equal(value, object)`
 - `minValue(min, object)`
 - `maxValue(max, object)`
 - `betweenValue([min, max], object)`
