@@ -134,6 +134,20 @@ function format(regex, options = {}) {
   }
 }
 
+function not(validator) {
+  const { name, isValid } = validator;
+
+  return {
+    ...validator,
+    name: appendNot(name),
+    isValid: (value) => !isValid(value),
+  }
+}
+
+function appendNot(name) {
+  return 'not' + name.slice(0, 1).toUpperCase() + name.slice(1)
+}
+
 function hasError(errorObject) {
   return Object.keys(errorObject).length > 0
 }
@@ -150,4 +164,4 @@ function getErrorOptions(errorObject, errorNames, key = null) {
 }
 
 export default createValidator;
-export { betweenLength, betweenValue, format, getErrorOptions, hasError, maxLength, maxValue, minLength, minValue, required };
+export { betweenLength, betweenValue, format, getErrorOptions, hasError, maxLength, maxValue, minLength, minValue, not, required };
