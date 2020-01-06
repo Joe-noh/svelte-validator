@@ -20,12 +20,12 @@ function createValidatorFun(rules) {
     if (!config.active) { return {} }
 
     return rules.reduce((violated, rule) => {
-      const { name, isValid, argument, options } = rule;
+      const { name, isValid, argument, object } = rule;
 
       if (isValid(value)) {
         return violated
       } else {
-        return {...violated, [name]: { ...options, argument}}
+        return {...violated, [name]: { ...object, argument}}
       }
     }, {})
   }
@@ -41,11 +41,11 @@ function fetch(opts, key, fallback) {
   return key in opts ? opts[key] : fallback
 }
 
-function required(options = {}) {
+function required(object = {}) {
   return {
     name: 'required',
     argument: undefined,
-    options,
+    object,
     isValid: (value) => {
       if (typeof value === 'string') {
         return value.trim() !== ''
@@ -56,44 +56,44 @@ function required(options = {}) {
   }
 }
 
-function equal(val, options = {}) {
+function equal(val, object = {}) {
   return {
     name: 'equal',
     argument: val,
-    options,
+    object,
     isValid: (value) => {
       return value === val
     }
   }
 }
 
-function minLength(length, options = {}) {
+function minLength(length, object = {}) {
   return {
     name: 'minLength',
     argument: length,
-    options,
+    object,
     isValid: (value) => {
       return value.length >= length
     }
   }
 }
 
-function maxLength(length, options = {}) {
+function maxLength(length, object = {}) {
   return {
     name: 'maxLength',
     argument: length,
-    options,
+    object,
     isValid: (value) => {
       return value.length <= length
     }
   }
 }
 
-function betweenLength([min, max], options = {}) {
+function betweenLength([min, max], object = {}) {
   return {
     name: 'betweenLength',
     argument: [min, max],
-    options,
+    object,
     isValid: (value) => {
       const length = value.length;
       return min <= length && length <= max
@@ -101,44 +101,44 @@ function betweenLength([min, max], options = {}) {
   }
 }
 
-function minValue(amount, options = {}) {
+function minValue(amount, object = {}) {
   return {
     name: 'minValue',
     argument: amount,
-    options,
+    object,
     isValid: (value) => {
       return value >= amount
     }
   }
 }
 
-function maxValue(amount, options = {}) {
+function maxValue(amount, object = {}) {
   return {
     name: 'maxValue',
     argument: amount,
-    options,
+    object,
     isValid: (value) => {
       return value <= amount
     }
   }
 }
 
-function betweenValue([min, max], options = {}) {
+function betweenValue([min, max], object = {}) {
   return {
     name: 'betweenValue',
     argument: [min, max],
-    options,
+    object,
     isValid: (value) => {
       return min <= value && value <= max
     }
   }
 }
 
-function format(regex, options = {}) {
+function format(regex, object = {}) {
   return {
     name: 'format',
     argument: regex,
-    options,
+    object,
     isValid: (value) => {
       return regex.test(value)
     }
@@ -163,7 +163,7 @@ function hasError(errorObject) {
   return Object.keys(errorObject).length > 0
 }
 
-function getErrorOptions(errorObject, errorNames, key = null) {
+function getErrors(errorObject, errorNames, key = null) {
   return errorNames.reduce((acc, name) => {
     if (name in errorObject) {
       const value = key ? errorObject[name][key] : errorObject[name];
@@ -175,4 +175,4 @@ function getErrorOptions(errorObject, errorNames, key = null) {
 }
 
 export default createValidator;
-export { betweenLength, betweenValue, equal, format, getErrorOptions, hasError, maxLength, maxValue, minLength, minValue, not, required };
+export { betweenLength, betweenValue, equal, format, getErrors, hasError, maxLength, maxValue, minLength, minValue, not, required };

@@ -1,8 +1,8 @@
-export function maxValue(amount, options = {}) {
+export function maxValue(amount, object = {}) {
   return {
     name: 'maxValue',
     argument: amount,
-    options,
+    object,
     isValid: (value) => {
       return value <= amount
     }

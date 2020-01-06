@@ -2,11 +2,11 @@ import { minValue } from '../../src/index'
 
 describe('minValue', () => {
   test('return value', () => {
-    const { name, argument, options, isValid } = minValue(10)
+    const { name, argument, object, isValid } = minValue(10)
 
     expect(name).toEqual('minValue')
     expect(argument).toEqual(10)
-    expect(options).toEqual(expect.any(Object))
+    expect(object).toEqual(expect.any(Object))
     expect(isValid).toEqual(expect.any(Function))
   })
 

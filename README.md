@@ -61,22 +61,22 @@ For example this can be used to prevent display errors until first blur event oc
 
 ### Builtin Validators
 
-- `required(options)`
-- `equal(options)`
-- `minValue(min, options)`
-- `maxValue(max, options)`
-- `betweenValue([min, max], options)`
-- `minLength(length, options)`
-- `maxLength(length, options)`
-- `betweenLength([min, max], options)`
-- `format(regex, options)`
+- `required(object)`
+- `equal(object)`
+- `minValue(min, object)`
+- `maxValue(max, object)`
+- `betweenValue([min, max], object)`
+- `minLength(length, object)`
+- `maxLength(length, object)`
+- `betweenLength([min, max], object)`
+- `format(regex, object)`
 - `not(validator)`
 
-You can put any object on `options`. It can be accessed via `errorStore` like `$errorStore.minValue`. See implementation for more details.
+You can put any object on `object`. It can be accessed via `errorStore` like `$errorStore.minValue`. See implementation for more details.
 
 ### Custom Validator
 
-You can implement your own validator. It should be an object which has `name` and `isValid` properties, and optionally `options`.
+You can implement your own validator. It should be an object which has `name` and `isValid` properties, and optionally `object`.
 
 ```javascript
 const myRule = {
@@ -84,7 +84,7 @@ const myRule = {
   isValid: (value) => {
     // true or false
   },
-  options: {},
+  object: { message: '...', color: 'red' }
 }
 
 const [valueStore, errorStore] = createValidator({ rules: [myRule] })
