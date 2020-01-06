@@ -1,8 +1,8 @@
-export function format(regex, options = {}) {
+export function format(regex, object = {}) {
   return {
     name: 'format',
     argument: regex,
-    options,
+    object,
     isValid: (value) => {
       return regex.test(value)
     }

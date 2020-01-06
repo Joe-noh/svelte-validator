@@ -1,8 +1,8 @@
-export function minLength(length, options = {}) {
+export function minLength(length, object = {}) {
   return {
     name: 'minLength',
     argument: length,
-    options,
+    object,
     isValid: (value) => {
       return value.length >= length
     }

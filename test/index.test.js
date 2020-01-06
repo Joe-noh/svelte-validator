@@ -20,7 +20,7 @@ describe('integration', () => {
     expect(Object.keys(errors)).toEqual([])
   })
 
-  test('can acccess given argument and options via error store', () => {
+  test('can acccess given argument and object via error store', () => {
     const rules = [minLength(3, { message: 'Too short!'})]
     const [valueStore, errorStore] = createValidator({ initial: 'a', rules })
 

@@ -2,11 +2,11 @@ import { equal } from '../../src/index'
 
 describe('equal', () => {
   test('return value', () => {
-    const { name, argument, options, isValid } = equal(10)
+    const { name, argument, object, isValid } = equal(10)
 
     expect(name).toEqual('equal')
     expect(argument).toEqual(10)
-    expect(options).toEqual(expect.any(Object))
+    expect(object).toEqual(expect.any(Object))
     expect(isValid).toEqual(expect.any(Function))
   })
 

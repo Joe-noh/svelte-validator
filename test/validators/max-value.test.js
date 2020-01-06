@@ -2,11 +2,11 @@ import { maxValue } from '../../src/index'
 
 describe('maxValue', () => {
   test('return value', () => {
-    const { name, argument, options, isValid } = maxValue(10)
+    const { name, argument, object, isValid } = maxValue(10)
 
     expect(name).toEqual('maxValue')
     expect(argument).toEqual(10)
-    expect(options).toEqual(expect.any(Object))
+    expect(object).toEqual(expect.any(Object))
     expect(isValid).toEqual(expect.any(Function))
   })
 

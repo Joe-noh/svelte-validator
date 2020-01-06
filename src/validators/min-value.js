@@ -1,8 +1,8 @@
-export function minValue(amount, options = {}) {
+export function minValue(amount, object = {}) {
   return {
     name: 'minValue',
     argument: amount,
-    options,
+    object,
     isValid: (value) => {
       return value >= amount
     }
