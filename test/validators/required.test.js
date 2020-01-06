@@ -1,7 +1,7 @@
 import { required } from '../../src/index'
 
 describe('required', () => {
-  describe('return value', () => {
+  test('return value', () => {
     const { name, argument, options, isValid } = required()
 
     expect(name).toEqual('required')
