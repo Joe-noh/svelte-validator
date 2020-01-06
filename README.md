@@ -65,6 +65,7 @@ For example this can be used to prevent display errors until first blur event oc
 - `maxLength(length, options)`
 - `betweenLength([min, max], options)`
 - `format(regex, options)`
+- `not(validator)`
 
 You can put any object on `options`. It can be accessed via `errorStore` like `$errorStore.minValue`. See implementation for more details.
 
