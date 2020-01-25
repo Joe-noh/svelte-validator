@@ -20,12 +20,12 @@ function createValidatorFun(rules) {
     if (!config.active) { return {} }
 
     return rules.reduce((violated, rule) => {
-      const { name, isValid, argument, object } = rule
+      const { name, isValid, argument, error } = rule
 
       if (isValid(value)) {
         return violated
       } else {
-        return {...violated, [name]: { ...object, argument}}
+        return {...violated, [name]: { ...error, argument}}
       }
     }, {})
   }

@@ -2,11 +2,11 @@ import { maxLength } from '../../src/index'
 
 describe('maxLength', () => {
   test('return value', () => {
-    const { name, argument, object, isValid } = maxLength(10)
+    const { name, argument, error, isValid } = maxLength(10, {})
 
     expect(name).toEqual('maxLength')
     expect(argument).toEqual(10)
-    expect(object).toEqual(expect.any(Object))
+    expect(error).toEqual({})
     expect(isValid).toEqual(expect.any(Function))
   })
 

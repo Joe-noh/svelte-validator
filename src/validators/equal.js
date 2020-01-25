@@ -1,8 +1,8 @@
-export function equal(val, object = {}) {
+export function equal(val, error) {
   return {
     name: 'equal',
     argument: val,
-    object,
+    error,
     isValid: (value) => {
       return value === val
     }

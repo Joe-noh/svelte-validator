@@ -1,8 +1,8 @@
-export function betweenLength([min, max], object = {}) {
+export function betweenLength([min, max], error) {
   return {
     name: 'betweenLength',
     argument: [min, max],
-    object,
+    error,
     isValid: (value) => {
       const length = value.length
       return min <= length && length <= max

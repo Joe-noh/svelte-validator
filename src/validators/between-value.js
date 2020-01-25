@@ -1,8 +1,8 @@
-export function betweenValue([min, max], object = {}) {
+export function betweenValue([min, max], error) {
   return {
     name: 'betweenValue',
     argument: [min, max],
-    object,
+    error,
     isValid: (value) => {
       return min <= value && value <= max
     }

@@ -2,11 +2,11 @@ import { format } from '../../src/index'
 
 describe('format', () => {
   test('return value', () => {
-    const { name, argument, object, isValid } = format(/regex/)
+    const { name, argument, error, isValid } = format(/regex/, {})
 
     expect(name).toEqual('format')
     expect(argument).toEqual(/regex/)
-    expect(object).toEqual(expect.any(Object))
+    expect(error).toEqual({})
     expect(isValid).toEqual(expect.any(Function))
   })
 
