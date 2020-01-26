@@ -2,11 +2,11 @@ import { required } from '../../src/index'
 
 describe('required', () => {
   test('return value', () => {
-    const { name, argument, object, isValid } = required()
+    const { name, argument, error, isValid } = required({})
 
     expect(name).toEqual('required')
     expect(argument).toBeUndefined()
-    expect(object).toEqual(expect.any(Object))
+    expect(error).toEqual({})
     expect(isValid).toEqual(expect.any(Function))
   })
 

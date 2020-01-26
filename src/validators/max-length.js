@@ -1,8 +1,8 @@
-export function maxLength(length, object = {}) {
+export function maxLength(length, error) {
   return {
     name: 'maxLength',
     argument: length,
-    object,
+    error,
     isValid: (value) => {
       return value.length <= length
     }

@@ -1,6 +1,7 @@
+import { tick } from 'svelte'
 import { writable, derived } from 'svelte/store'
 
-export function createValidator(opts) {
+export function create(opts) {
   const { initial, rules } = opts
   const validator = createValidatorFun(rules)
 
@@ -12,7 +13,10 @@ export function createValidator(opts) {
     configStore.update(config => ({ ...config, active: true }))
   }
 
-  return [valueStore, errorStore, { activate }]
+  return [
+    { ...valueStore, activate },
+    errorStore,
+  ]
 }
 
 function createValidatorFun(rules) {
@@ -20,12 +24,12 @@ function createValidatorFun(rules) {
     if (!config.active) { return {} }
 
     return rules.reduce((violated, rule) => {
-      const { name, isValid, argument, object } = rule
+      const { name, isValid, argument, error } = rule
 
       if (isValid(value)) {
         return violated
       } else {
-        return {...violated, [name]: { ...object, argument}}
+        return {...violated, [name]: { ...error, argument}}
       }
     }, {})
   }
@@ -39,4 +43,15 @@ function config(opts) {
 
 function fetch(opts, key, fallback) {
   return key in opts ? opts[key] : fallback
+}
+
+export function deriveErrors(errorStores) {
+  return derived(errorStores, errors => {
+    return errors.filter(error => Object.keys(error).length !== 0)
+  })
+}
+
+export function validateAll(valueStores) {
+  valueStores.forEach(store => store.activate())
+  return tick()
 }

@@ -12,16 +12,26 @@ npm i -S svelte-validator
 
 ```html
 <script>
-  import createValidator, { required, minLength, equal, not, hasError } from 'svelte-validator'
+  import svelteValidator, { required, minLength, equal, not } from 'svelte-validator'
 
-  const [valueStore, errorStore, command] = createValidator({
+  const [valueStore, errorStore] = svelteValidator.create({
     initial: '',
     rules: [
-      required({ message: 'Cannot be blank!' }), // Can put arbitrary object
+      required({ message: 'Cannot be blank!' }),
       minLength(3, { message: 'Should be longer than 3.' }),
       not(equal(10, { message: 'Should not equal to 10.' })),
     ]
   })
+
+  const errors = svelteValidator.deriveErrors([errorStores])
+
+  async function submit(event) {
+    await svelteValidator.validateAll([valueStore]) // activate all value stores and call `tick()`
+
+    if ($errors.length === 0) {
+      // do submit!
+    }
+  }
 </script>
 
 <form>
@@ -36,11 +46,11 @@ npm i -S svelte-validator
     <span>{$errorStore.notEqual.message}</span>
   {/if}
 
-  <button type="submit" disabled="{hasError($errorStore)}">Submit</button>
+  <button type="submit" disabled="{$errors.length > 0}" on:click="{submit}">Submit</button>
 </form>
 ```
 
-### `createValidator` Options
+### `svelteValidator.create` Options
 
 #### `rules`
 
@@ -52,31 +62,44 @@ Initial value of `valueStore`.
 
 #### `immediate`
 
-If `false`, validation does not run until calling `command.activate()`. Default `true`.
-For example this can be used to prevent display errors until first blur event occurs.
+If `false`, validation does not run until calling `valueStore.activate()`. Default `true`.
+For example this can be used to prevent from displaying errors until first blur event occurs.
 
 ```html
-<input type="text" on:blur="{command.activate}">
+<input type="text" on:blur="{valueStore.activate}">
 ```
 
 ### Builtin Validators
 
-- `required(object)`
-- `equal(value, object)`
-- `minValue(min, object)`
-- `maxValue(max, object)`
-- `betweenValue([min, max], object)`
-- `minLength(length, object)`
-- `maxLength(length, object)`
-- `betweenLength([min, max], object)`
-- `format(regex, object)`
+- `required(error)`
+- `equal(value, error)`
+- `minValue(min, error)`
+- `maxValue(max, error)`
+- `betweenValue([min, max], error)`
+- `minLength(length, error)`
+- `maxLength(length, error)`
+- `betweenLength([min, max], error)`
+- `format(regex, error)`
 - `not(validator)`
 
-You can put any object on `object`. It can be accessed via `errorStore` like `$errorStore.minValue`. See implementation for more details.
+#### `error` argument
 
-### Custom Validator
+Arbitrary error value.
 
-You can implement your own validator. It should be an object which has `name` and `isValid` properties, and optionally `object`.
+```javascript
+const [valueStore, errorStore] = svelteValidator.create({
+  initial: '',
+  rules: [
+    required({ foo: 'bar' }),
+  ]
+})
+
+$errorStore.required.foo // === 'bar'
+```
+
+### Custom Rule
+
+You can implement your own validation rule. It should be an object which has `name`, `isValid` and `error` properties.
 
 ```javascript
 const myRule = {
@@ -84,9 +107,9 @@ const myRule = {
   isValid: (value) => {
     // true or false
   },
-  object: { message: '...', color: 'red' }
+  error: { message: '...', color: 'red' }
 }
 
-const [valueStore, errorStore] = createValidator({ rules: [myRule] })
+const [valueStore, errorStore] = svelteValidator.create({ rules: [myRule] })
 // $errorStore.myRule appears when value violates the rule.
 ```

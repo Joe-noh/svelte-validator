@@ -7,6 +7,7 @@ export default {
     { file: pkg.module, format: 'es', exports: 'named' },
   ],
   external: [
+    'svelte',
     'svelte/store'
   ]
 }

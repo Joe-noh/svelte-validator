@@ -1,6 +1,7 @@
+import { tick } from 'svelte';
 import { writable, derived } from 'svelte/store';
 
-function createValidator(opts) {
+function create(opts) {
   const { initial, rules } = opts;
   const validator = createValidatorFun(rules);
 
@@ -12,7 +13,10 @@ function createValidator(opts) {
     configStore.update(config => ({ ...config, active: true }));
   };
 
-  return [valueStore, errorStore, { activate }]
+  return [
+    { ...valueStore, activate },
+    errorStore,
+  ]
 }
 
 function createValidatorFun(rules) {
@@ -20,12 +24,12 @@ function createValidatorFun(rules) {
     if (!config.active) { return {} }
 
     return rules.reduce((violated, rule) => {
-      const { name, isValid, argument, object } = rule;
+      const { name, isValid, argument, error } = rule;
 
       if (isValid(value)) {
         return violated
       } else {
-        return {...violated, [name]: { ...object, argument}}
+        return {...violated, [name]: { ...error, argument}}
       }
     }, {})
   }
@@ -41,11 +45,29 @@ function fetch(opts, key, fallback) {
   return key in opts ? opts[key] : fallback
 }
 
-function required(object = {}) {
+function deriveErrors(errorStores) {
+  return derived(errorStores, errors => {
+    return errors.filter(error => Object.keys(error).length !== 0)
+  })
+}
+
+function validateAll(valueStores) {
+  valueStores.forEach(store => store.activate());
+  return tick()
+}
+
+var svelteValidator = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  create: create,
+  deriveErrors: deriveErrors,
+  validateAll: validateAll
+});
+
+function required(error) {
   return {
     name: 'required',
     argument: undefined,
-    object,
+    error,
     isValid: (value) => {
       if (typeof value === 'string') {
         return value.trim() !== ''
@@ -56,44 +78,44 @@ function required(object = {}) {
   }
 }
 
-function equal(val, object = {}) {
+function equal(val, error) {
   return {
     name: 'equal',
     argument: val,
-    object,
+    error,
     isValid: (value) => {
       return value === val
     }
   }
 }
 
-function minLength(length, object = {}) {
+function minLength(length, error) {
   return {
     name: 'minLength',
     argument: length,
-    object,
+    error,
     isValid: (value) => {
       return value.length >= length
     }
   }
 }
 
-function maxLength(length, object = {}) {
+function maxLength(length, error) {
   return {
     name: 'maxLength',
     argument: length,
-    object,
+    error,
     isValid: (value) => {
       return value.length <= length
     }
   }
 }
 
-function betweenLength([min, max], object = {}) {
+function betweenLength([min, max], error) {
   return {
     name: 'betweenLength',
     argument: [min, max],
-    object,
+    error,
     isValid: (value) => {
       const length = value.length;
       return min <= length && length <= max
@@ -101,44 +123,44 @@ function betweenLength([min, max], object = {}) {
   }
 }
 
-function minValue(amount, object = {}) {
+function minValue(amount, error) {
   return {
     name: 'minValue',
     argument: amount,
-    object,
+    error,
     isValid: (value) => {
       return value >= amount
     }
   }
 }
 
-function maxValue(amount, object = {}) {
+function maxValue(amount, error) {
   return {
     name: 'maxValue',
     argument: amount,
-    object,
+    error,
     isValid: (value) => {
       return value <= amount
     }
   }
 }
 
-function betweenValue([min, max], object = {}) {
+function betweenValue([min, max], error) {
   return {
     name: 'betweenValue',
     argument: [min, max],
-    object,
+    error,
     isValid: (value) => {
       return min <= value && value <= max
     }
   }
 }
 
-function format(regex, object = {}) {
+function format(regex, error) {
   return {
     name: 'format',
     argument: regex,
-    object,
+    error,
     isValid: (value) => {
       return regex.test(value)
     }
@@ -159,20 +181,5 @@ function appendNot(name) {
   return 'not' + name.slice(0, 1).toUpperCase() + name.slice(1)
 }
 
-function hasError(errorObject) {
-  return Object.keys(errorObject).length > 0
-}
-
-function getErrors(errorObject, errorNames, key = null) {
-  return errorNames.reduce((acc, name) => {
-    if (name in errorObject) {
-      const value = key ? errorObject[name][key] : errorObject[name];
-      return [...acc, value]
-    } else {
-      return acc
-    }
-  }, [])
-}
-
-export default createValidator;
-export { betweenLength, betweenValue, equal, format, getErrors, hasError, maxLength, maxValue, minLength, minValue, not, required };
+export default svelteValidator;
+export { betweenLength, betweenValue, equal, format, maxLength, maxValue, minLength, minValue, not, required };

@@ -1,8 +1,8 @@
-export function required(object = {}) {
+export function required(error) {
   return {
     name: 'required',
     argument: undefined,
-    object,
+    error,
     isValid: (value) => {
       if (typeof value === 'string') {
         return value.trim() !== ''
