@@ -4,7 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var store = require('svelte/store');
 
-function createValidator(opts) {
+function create(opts) {
   const { initial, rules } = opts;
   const validator = createValidatorFun(rules);
 
@@ -44,6 +44,11 @@ function config(opts) {
 function fetch(opts, key, fallback) {
   return key in opts ? opts[key] : fallback
 }
+
+var svelteValidator = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  create: create
+});
 
 function required(error) {
   return {
@@ -180,7 +185,7 @@ function getErrors(errorObject, errorNames, key = null) {
 
 exports.betweenLength = betweenLength;
 exports.betweenValue = betweenValue;
-exports.default = createValidator;
+exports.default = svelteValidator;
 exports.equal = equal;
 exports.format = format;
 exports.getErrors = getErrors;

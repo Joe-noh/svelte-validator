@@ -1,6 +1,6 @@
 import { writable, derived } from 'svelte/store'
 
-export function createValidator(opts) {
+export function create(opts) {
   const { initial, rules } = opts
   const validator = createValidatorFun(rules)
 

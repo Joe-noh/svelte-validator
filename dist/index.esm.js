@@ -1,6 +1,6 @@
 import { writable, derived } from 'svelte/store';
 
-function createValidator(opts) {
+function create(opts) {
   const { initial, rules } = opts;
   const validator = createValidatorFun(rules);
 
@@ -40,6 +40,11 @@ function config(opts) {
 function fetch(opts, key, fallback) {
   return key in opts ? opts[key] : fallback
 }
+
+var svelteValidator = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  create: create
+});
 
 function required(error) {
   return {
@@ -174,5 +179,5 @@ function getErrors(errorObject, errorNames, key = null) {
   }, [])
 }
 
-export default createValidator;
+export default svelteValidator;
 export { betweenLength, betweenValue, equal, format, getErrors, hasError, maxLength, maxValue, minLength, minValue, not, required };

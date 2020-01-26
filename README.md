@@ -12,9 +12,9 @@ npm i -S svelte-validator
 
 ```html
 <script>
-  import createValidator, { required, minLength, equal, not, hasError } from 'svelte-validator'
+  import svelteValidator, { required, minLength, equal, not, hasError } from 'svelte-validator'
 
-  const [valueStore, errorStore, command] = createValidator({
+  const [valueStore, errorStore, command] = svelteValidator.create({
     initial: '',
     rules: [
       required({ message: 'Cannot be blank!' }),
@@ -77,7 +77,7 @@ For example this can be used to prevent from displaying errors until first blur 
 Arbitrary error value.
 
 ```javascript
-const [valueStore, errorStore, command] = createValidator({
+const [valueStore, errorStore, command] = svelteValidator.create({
   initial: '',
   rules: [
     required({ foo: 'bar' }),
@@ -100,6 +100,6 @@ const myRule = {
   error: { message: '...', color: 'red' }
 }
 
-const [valueStore, errorStore] = createValidator({ rules: [myRule] })
+const [valueStore, errorStore] = svelteValidator.create({ rules: [myRule] })
 // $errorStore.myRule appears when value violates the rule.
 ```

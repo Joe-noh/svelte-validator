@@ -1,10 +1,10 @@
 import { get } from 'svelte/store'
-import createValidator, { required, minLength } from '../src/index'
+import svelteValidator, { required, minLength } from '../src/index'
 
 describe('integration', () => {
   test('validates reactively', () => {
     const rules = [required(), minLength(3)]
-    const [valueStore, errorStore] = createValidator({ initial: '', rules })
+    const [valueStore, errorStore] = svelteValidator.create({ initial: '', rules })
 
     let errors = get(errorStore)
     expect(Object.keys(errors)).toEqual(expect.arrayContaining(['required', 'minLength']))
@@ -22,7 +22,7 @@ describe('integration', () => {
 
   test('can acccess given argument and object via error store', () => {
     const rules = [minLength(3, { message: 'Too short!'})]
-    const [valueStore, errorStore] = createValidator({ initial: 'a', rules })
+    const [valueStore, errorStore] = svelteValidator.create({ initial: 'a', rules })
 
     let errors = get(errorStore)
     expect(errors.minLength.argument).toEqual(3)
@@ -31,7 +31,7 @@ describe('integration', () => {
 
   test('immediate: false delays validation until calling activate', () => {
     const rules = [minLength(3)]
-    const [valueStore, errorStore, command] = createValidator({ rules, immediate: false })
+    const [valueStore, errorStore, command] = svelteValidator.create({ rules, immediate: false })
 
     let errors = get(errorStore)
     expect(Object.keys(errors)).toEqual([])
@@ -54,7 +54,7 @@ describe('custom validator', () => {
       name: 'theAnswer',
       isValid: (value) => value === 42
     }
-    const [valueStore, errorStore] = createValidator({ initial: 0, rules: [myRule] })
+    const [valueStore, errorStore] = svelteValidator.create({ initial: 0, rules: [myRule] })
 
     let errors = get(errorStore)
     expect(Object.keys(errors)).toEqual(['theAnswer'])
