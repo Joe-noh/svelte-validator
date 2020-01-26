@@ -2,6 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var svelte = require('svelte');
 var store = require('svelte/store');
 
 function create(opts) {
@@ -48,9 +49,22 @@ function fetch(opts, key, fallback) {
   return key in opts ? opts[key] : fallback
 }
 
+function deriveErrors(errorStores) {
+  return store.derived(errorStores, errors => {
+    return errors.filter(error => Object.keys(error).length !== 0)
+  })
+}
+
+function validateAll(valueStores) {
+  valueStores.forEach(store => store.activate());
+  return svelte.tick()
+}
+
 var svelteValidator = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  create: create
+  create: create,
+  deriveErrors: deriveErrors,
+  validateAll: validateAll
 });
 
 function required(error) {
@@ -171,28 +185,11 @@ function appendNot(name) {
   return 'not' + name.slice(0, 1).toUpperCase() + name.slice(1)
 }
 
-function hasError(errorObject) {
-  return Object.keys(errorObject).length > 0
-}
-
-function getErrors(errorObject, errorNames, key = null) {
-  return errorNames.reduce((acc, name) => {
-    if (name in errorObject) {
-      const value = key ? errorObject[name][key] : errorObject[name];
-      return [...acc, value]
-    } else {
-      return acc
-    }
-  }, [])
-}
-
 exports.betweenLength = betweenLength;
 exports.betweenValue = betweenValue;
 exports.default = svelteValidator;
 exports.equal = equal;
 exports.format = format;
-exports.getErrors = getErrors;
-exports.hasError = hasError;
 exports.maxLength = maxLength;
 exports.maxValue = maxValue;
 exports.minLength = minLength;

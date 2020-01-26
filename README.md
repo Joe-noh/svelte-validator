@@ -24,6 +24,14 @@ npm i -S svelte-validator
   })
 
   const errors = svelteValidator.deriveErrors([errorStores])
+
+  async function submit(event) {
+    await svelteValidator.validateAll([valueStore]) // activate all value stores and call `tick()`
+
+    if ($errors.length === 0) {
+      // do submit!
+    }
+  }
 </script>
 
 <form>
@@ -38,7 +46,7 @@ npm i -S svelte-validator
     <span>{$errorStore.notEqual.message}</span>
   {/if}
 
-  <button type="submit" disabled="{$errors.length > 0}">Submit</button>
+  <button type="submit" disabled="{$errors.length > 0}" on:click="{submit}">Submit</button>
 </form>
 ```
 

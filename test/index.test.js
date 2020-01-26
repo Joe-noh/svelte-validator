@@ -34,6 +34,20 @@ describe('integration', () => {
     expect(get(errors)).toEqual([])
   })
 
+  test('validate all stores at once', async () => {
+    const rules = [required()]
+    const [name, nameError] = svelteValidator.create({ initial: '', immediate: false, rules })
+    const [age, ageError] = svelteValidator.create({ initial: null, immediate: false, rules })
+
+    const errors = svelteValidator.deriveErrors([nameError, ageError])
+
+    expect(get(errors).length).toEqual(0)
+
+    await svelteValidator.validateAll([name, age])
+
+    expect(get(errors).length).toEqual(2)
+  })
+
   test('can acccess given argument and object via error store', () => {
     const rules = [minLength(3, { message: 'Too short!'})]
     const [valueStore, errorStore] = svelteValidator.create({ initial: 'a', rules })

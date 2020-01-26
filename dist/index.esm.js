@@ -1,3 +1,4 @@
+import { tick } from 'svelte';
 import { writable, derived } from 'svelte/store';
 
 function create(opts) {
@@ -44,9 +45,22 @@ function fetch(opts, key, fallback) {
   return key in opts ? opts[key] : fallback
 }
 
+function deriveErrors(errorStores) {
+  return derived(errorStores, errors => {
+    return errors.filter(error => Object.keys(error).length !== 0)
+  })
+}
+
+function validateAll(valueStores) {
+  valueStores.forEach(store => store.activate());
+  return tick()
+}
+
 var svelteValidator = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  create: create
+  create: create,
+  deriveErrors: deriveErrors,
+  validateAll: validateAll
 });
 
 function required(error) {
@@ -167,20 +181,5 @@ function appendNot(name) {
   return 'not' + name.slice(0, 1).toUpperCase() + name.slice(1)
 }
 
-function hasError(errorObject) {
-  return Object.keys(errorObject).length > 0
-}
-
-function getErrors(errorObject, errorNames, key = null) {
-  return errorNames.reduce((acc, name) => {
-    if (name in errorObject) {
-      const value = key ? errorObject[name][key] : errorObject[name];
-      return [...acc, value]
-    } else {
-      return acc
-    }
-  }, [])
-}
-
 export default svelteValidator;
-export { betweenLength, betweenValue, equal, format, getErrors, hasError, maxLength, maxValue, minLength, minValue, not, required };
+export { betweenLength, betweenValue, equal, format, maxLength, maxValue, minLength, minValue, not, required };

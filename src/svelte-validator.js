@@ -1,3 +1,4 @@
+import { tick } from 'svelte'
 import { writable, derived } from 'svelte/store'
 
 export function create(opts) {
@@ -48,4 +49,9 @@ export function deriveErrors(errorStores) {
   return derived(errorStores, errors => {
     return errors.filter(error => Object.keys(error).length !== 0)
   })
+}
+
+export function validateAll(valueStores) {
+  valueStores.forEach(store => store.activate())
+  return tick()
 }
