@@ -20,6 +20,20 @@ describe('integration', () => {
     expect(Object.keys(errors)).toEqual([])
   })
 
+  test('deriving errors', () => {
+    const rules = [required()]
+    const [name, nameError] = svelteValidator.create({ initial: '', rules })
+    const [age, ageError] = svelteValidator.create({ initial: 20, rules })
+
+    const errors = svelteValidator.deriveErrors([nameError, ageError])
+
+    expect(get(errors).length).toEqual(1)
+
+    name.set('John')
+
+    expect(get(errors)).toEqual([])
+  })
+
   test('can acccess given argument and object via error store', () => {
     const rules = [minLength(3, { message: 'Too short!'})]
     const [valueStore, errorStore] = svelteValidator.create({ initial: 'a', rules })

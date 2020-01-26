@@ -43,3 +43,9 @@ function config(opts) {
 function fetch(opts, key, fallback) {
   return key in opts ? opts[key] : fallback
 }
+
+export function deriveErrors(errorStores) {
+  return derived(errorStores, errors => {
+    return errors.filter(error => Object.keys(error).length !== 0)
+  })
+}

@@ -12,7 +12,7 @@ npm i -S svelte-validator
 
 ```html
 <script>
-  import svelteValidator, { required, minLength, equal, not, hasError } from 'svelte-validator'
+  import svelteValidator, { required, minLength, equal, not } from 'svelte-validator'
 
   const [valueStore, errorStore] = svelteValidator.create({
     initial: '',
@@ -22,6 +22,8 @@ npm i -S svelte-validator
       not(equal(10, { message: 'Should not equal to 10.' })),
     ]
   })
+
+  const errors = svelteValidator.deriveErrors([errorStores])
 </script>
 
 <form>
@@ -36,11 +38,11 @@ npm i -S svelte-validator
     <span>{$errorStore.notEqual.message}</span>
   {/if}
 
-  <button type="submit" disabled="{hasError($errorStore)}">Submit</button>
+  <button type="submit" disabled="{$errors.length > 0}">Submit</button>
 </form>
 ```
 
-### `createValidator` Options
+### `svelteValidator.create` Options
 
 #### `rules`
 
@@ -72,7 +74,7 @@ For example this can be used to prevent from displaying errors until first blur 
 - `format(regex, error)`
 - `not(validator)`
 
-#### `error`
+#### `error` argument
 
 Arbitrary error value.
 
