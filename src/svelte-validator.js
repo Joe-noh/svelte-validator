@@ -12,7 +12,10 @@ export function create(opts) {
     configStore.update(config => ({ ...config, active: true }))
   }
 
-  return [valueStore, errorStore, { activate }]
+  return [
+    { ...valueStore, activate },
+    errorStore,
+  ]
 }
 
 function createValidatorFun(rules) {

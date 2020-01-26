@@ -31,7 +31,7 @@ describe('integration', () => {
 
   test('immediate: false delays validation until calling activate', () => {
     const rules = [minLength(3)]
-    const [valueStore, errorStore, command] = svelteValidator.create({ rules, immediate: false })
+    const [valueStore, errorStore] = svelteValidator.create({ rules, immediate: false })
 
     let errors = get(errorStore)
     expect(Object.keys(errors)).toEqual([])
@@ -41,7 +41,7 @@ describe('integration', () => {
     errors = get(errorStore)
     expect(Object.keys(errors)).toEqual([])
 
-    command.activate()
+    valueStore.activate()
 
     errors = get(errorStore)
     expect(Object.keys(errors)).toEqual(expect.arrayContaining(['minLength']))

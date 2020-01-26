@@ -14,7 +14,7 @@ npm i -S svelte-validator
 <script>
   import svelteValidator, { required, minLength, equal, not, hasError } from 'svelte-validator'
 
-  const [valueStore, errorStore, command] = svelteValidator.create({
+  const [valueStore, errorStore] = svelteValidator.create({
     initial: '',
     rules: [
       required({ message: 'Cannot be blank!' }),
@@ -52,11 +52,11 @@ Initial value of `valueStore`.
 
 #### `immediate`
 
-If `false`, validation does not run until calling `command.activate()`. Default `true`.
+If `false`, validation does not run until calling `valueStore.activate()`. Default `true`.
 For example this can be used to prevent from displaying errors until first blur event occurs.
 
 ```html
-<input type="text" on:blur="{command.activate}">
+<input type="text" on:blur="{valueStore.activate}">
 ```
 
 ### Builtin Validators
@@ -77,7 +77,7 @@ For example this can be used to prevent from displaying errors until first blur 
 Arbitrary error value.
 
 ```javascript
-const [valueStore, errorStore, command] = svelteValidator.create({
+const [valueStore, errorStore] = svelteValidator.create({
   initial: '',
   rules: [
     required({ foo: 'bar' }),
