@@ -1,8 +1,12 @@
 # svelte-validator
 
-## Install
+## API Philosophy
 
-This is WIP project. Use at your own responsibility!
+- Use the power of svelte/store and $syntax.
+- Just `bind` it.
+- No plan to `use:action`. It is useful but cannot be used with custom components, only for DOM elements.
+
+## Install
 
 ```
 npm i -S svelte-validator
