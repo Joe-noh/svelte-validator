@@ -37,7 +37,7 @@
     "babel-jest": "^24.9.0",
     "husky": "^3.1.0",
     "jest": "^24.9.0",
-    "np": "^5.2.1",
+    "np": "^8.0.4",
     "rollup": "^1.27.14",
     "rollup-plugin-node-resolve": "^5.2.0",
     "svelte": ">= 3.0.0"
